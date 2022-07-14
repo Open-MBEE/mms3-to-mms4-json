@@ -23,7 +23,7 @@ for d in data["elements"]:
         new_element = {"_contents": d["_contents"], "id": d["id"]}
         result["elements"].append(new_element)
         added += 1
-    elif d["id"].endswith("_pei") or d["id"].startswith("_hidden") or d["ownerId"].startswith("_hidden") or d["ownerId"].endswith("_pei"):
+    elif d["id"].endswith("_pei") or d["id"].startswith("_hidden") or d["ownerId"].startswith("_hidden") or d["ownerId"].endswith("_pei") or d["ownerId"].startswith("view_instances_bin"):
         new_element = {}
         for key, value in d.items():
             if not key.startswith("_") or key == "_contents" or key == "_appliedStereotypeIds":
