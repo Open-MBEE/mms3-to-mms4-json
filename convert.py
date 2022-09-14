@@ -6,33 +6,43 @@ import sys
 
 result = {"elements": []}
 fullpath = sys.argv[1]
-path, filename = os.path.split(fullpath)
 
-print("Processing " + filename)
+files = []
 
-with open(filename, "r") as file:
-    data = json.load(file)
+if os.path.isdir(fullpath):
+    print("Processing directory " + fullpath)
+    files = [os.path.join(fullpath, f) for f in os.listdir(fullpath) if os.path.isfile(os.path.join(fullpath, f))]
+else:
+    print("Processing file " + fullpath)
+    files.append(fullpath)
 
-count = 0
-for d in data["elements"]:
-    new_element = {}
-    count += 1
-    for key, value in d.items():
-        if not key.startswith("_") or "_contents" in key or "_appliedStereotypeIds" in key:
-            new_element[key] = value
+print(files)
 
-    result["elements"].append(new_element)
+for filename in files:
+    with open(filename, "r") as file:
+        path, target = os.path.split(filename)
+        data = json.load(file)
 
-print("Finished processing " + str(count) + " elements")
+        count = 0
+        for d in data["elements"]:
+            new_element = {}
+            count += 1
+            for key, value in d.items():
+                if not key.startswith("_") or "_contents" in key or "_appliedStereotypeIds" in key:
+                    new_element[key] = value
 
-new_path = os.path.join(path, "processed")
-if not os.path.exists(new_path):
-    print("Creating new directory: " + new_path)
-    os.makedirs(new_path)
+            result["elements"].append(new_element)
 
-new_full_path = os.path.join(new_path, filename)
+        print("Finished processing " + str(count) + " elements")
 
-print("Saving to: " + new_full_path)
+        new_path = os.path.join(path, "processed")
+        if not os.path.exists(new_path):
+            print("Creating new directory: " + new_path)
+            os.makedirs(new_path)
 
-with open(new_full_path, "w") as outfile:
-    json.dump(result, outfile)
+        new_full_path = os.path.join(new_path, target)
+
+        print("Saving to: " + new_full_path)
+
+        with open(new_full_path, "w") as outfile:
+            json.dump(result, outfile)
