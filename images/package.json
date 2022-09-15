@@ -1,0 +1,8 @@
+{
+    "name": "mms-images",
+    "dependencies": {
+      "jquery": "~3.3.1",
+      "jsdom": "~20.0.0",
+      "node-fetch": "~2.6.6"
+    }
+}
