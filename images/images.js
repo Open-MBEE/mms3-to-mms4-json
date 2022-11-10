@@ -8,12 +8,11 @@ const $ = require('jquery')(JSDOM.window);
 const fs = require('fs');
 
 const MMS3TICKET = '';
-//const MMS3 = 'https://mms.openmbee.org';
-const MMS3 = 'https://opencae.jpl.nasa.gov';
-const MMS4 = 'https://cae-mms.jpl.nasa.gov';
-const USER = '';
+const MMS3 = 'https://mms.openmbee.org';
+const MMS4 = 'https://mms4.openmbee.org';
+const USER = ''; //user and pass for mms4
 const PASS = '';
-const MMS4PROJECTID = 'PROJECT-518a8373-787d-422b-bcb2-a36be9f81c49';
+const MMS4PROJECTID = '';
 
 // downloads image and uploads it to mms4 as id: name with original ext in filename
 async function getImage(url, ext, name) {
@@ -38,6 +37,10 @@ async function getImage(url, ext, name) {
     }
 }
 async function processImages(htmlin) {
+    if (htmlin == 2) {
+        console.log('htmlin is 2');
+        return '';
+    }
     if (!htmlin.includes('<img')) {
         return htmlin;
     }
